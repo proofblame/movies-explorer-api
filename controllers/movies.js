@@ -55,7 +55,7 @@ const deleteMovie = (req, res, next) => {
       if (!movie || movie.owner.toString() !== req.user._id) {
         throw new NotFoundError('У пользователя нет фильма с таким id');
       }
-      Movie.findByIdAndDelete(req.params.movieId)
+      movie.remove()
         .then(() => {
           res.send({ message: 'Фильм удалён' });
         })

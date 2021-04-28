@@ -60,15 +60,14 @@ const updateProfile = (req, res, next) => {
       if (err.name === 'CastError') {
         throw new BadRequestError('Невалидные данные');
       }
+      throw new ConflictError('Произошел конфликт');
     })
     .catch(next);
 };
 
 // Создает нового пользователя
 const createUser = (req, res, next) => {
-  const {
-    name, email, password,
-  } = req.body;
+  const { name, email, password } = req.body;
   bcrypt
     .hash(password, 10)
     .then((hash) => User.create({
@@ -82,7 +81,7 @@ const createUser = (req, res, next) => {
         throw new BadRequestError('Данные не прошли валидацию');
       }
       if (err.name === 'MongoError' || err.code === '11000') {
-        throw new ConflictError('Такой емейл уже зарегистрирован');
+        throw new ConflictError('Такой емейл или имя уже зарегистрированы');
       }
     })
     .catch(next);
