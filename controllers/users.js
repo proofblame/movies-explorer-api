@@ -28,7 +28,7 @@ const getMe = (req, res, next) => {
   };
 
   if (!isAuthorized(token)) {
-    throw new ForbiddenError('Доступ запрещен');
+    throw new ForbiddenError('Доступ запрещен123');
   }
 
   return User.findById(req.user._id)
